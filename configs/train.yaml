@@ -1,0 +1,46 @@
+model:
+  pretrained_model_name_or_path: "/path/to/stable-diffusion-v1-5/"  
+  image_encoder_path:   # 
+
+data:
+  data_json_file: "/path/to/dataset_json.json"
+  data_root_path: "/path/to/datset" 
+  resolution: 512  
+  dataloader_num_workers: 16 
+
+training:
+  seed: 42
+  train_batch_size: 32 
+  scale_lr: false 
+  learning_rate: 1e-5  
+  weight_decay: 0.01  
+  num_train_epochs: 100  
+  save_steps: 5000  
+  valid_steps: 20000 
+  decode_steps: 200000 
+  max_train_steps: 100000  #定义之后覆盖max train epochs
+  gradient_accumulation_steps: 1
+  noise_offset: 0
+  enable_xformers_memory_efficient_attention: false
+  gradient_checkpointing: true
+  precision_type: "fp16"  
+  report_to: "wandb" 
+  local_rank: -1  
+  resume_from_checkpoint: latest  # 从哪个检查点恢复训练（可选）
+
+output:
+    base_dir: "experiments"
+    exp_name: "train" 
+    proj_dir: "${output.base_dir}/${output.exp_name}"  
+    ckpt_dir: "${output.base_dir}/${output.exp_name}/checkpoints"  
+    log_dir: "${output.base_dir}/${output.exp_name}/logs"  
+    image_dir: "${output.base_dir}/${output.exp_name}/valid_images" 
+    decode_dir: "${output.base_dir}/${output.exp_name}/decoded_images"
+    config_dir: "${output.base_dir}/${output.exp_name}/configs" 
+  
+test:
+  prompt:
+  negative_prompt: 
+  image: 
+
+
